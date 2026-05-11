@@ -1,0 +1,1773 @@
+/* ================================================================
+   CSS Animation Effects Collection
+   Compatible with ParticleX theme (pastel colors, rounded corners)
+   All pure CSS -- no JavaScript required
+   ================================================================ */
+
+/* ================================================================
+   TABLE OF CONTENTS
+   ================================================================
+   1.  ParticleX Theme Animations (existing enhancements)
+   2.  kirakira.moe Animations (extended)
+   3.  Glassmorphism Effects
+   4.  Neumorphism Effects
+   5.  Gradient Animations
+   6.  Text Animations
+   7.  Card Animations (3D tilt, hover)
+   8.  Page Transitions
+   9.  Scroll-Triggered Animations
+   10. Loading Animations (skeleton, shimmer, spinners)
+   11. Micro-Interactions (button ripples, checkbox, toggle)
+   12. Background Animations (particles, waves, aurora, stars)
+   13. Library-Inspired Effects (Animate.css, Hover.css, CSShake, Magic)
+   ================================================================ */
+
+
+/* ================================================================
+   1. PARTICLEX THEME ANIMATIONS
+   ================================================================
+   Source: ParticleX Hugo Theme
+   Colors: pastel pink (#ffa2c4), blue (#9abbf7), gradient
+   Border-radius: 20px, transitions: cubic-bezier(.19,1,.22,1)
+   ================================================================ */
+
+/* -- Avatar Rotation on Hover -- */
+/* Use case: Profile avatar in sidebar or hero section */
+/* Performance: GPU-accelerated via transform, very efficient */
+.particlex-avatar-rotate {
+    transition: transform 0.5s cubic-bezier(.19,1,.22,1);
+}
+.particlex-avatar-rotate:hover {
+    transform: rotate(360deg);
+}
+
+/* -- Card Hover Float Effect -- */
+/* Use case: Post cards, sidebar cards */
+/* Performance: transform + box-shadow, both GPU-composited */
+.particlex-card-float {
+    transition: transform 0.35s cubic-bezier(.19,1,.22,1),
+                box-shadow 0.35s cubic-bezier(.19,1,.22,1);
+}
+.particlex-card-float:hover {
+    transform: translate(-5px, -5px);
+    box-shadow: 0 0 5px rgba(217, 217, 217, 0.3);
+}
+
+/* -- Gradient Button with Ripple -- */
+/* Use case: CTA buttons, "Read More" links */
+/* Performance: pseudo-element ripple is GPU-composited */
+.particlex-gradient-btn {
+    background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%);
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    padding: 10px 25px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(.19,1,.22,1);
+}
+.particlex-gradient-btn:hover {
+    box-shadow: 0 5px 15px rgba(154, 187, 247, 0.4);
+    transform: translateY(-2px);
+}
+.particlex-gradient-btn::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    left: 50%;
+    top: 50%;
+    opacity: 0;
+    transition: all 0.5s;
+}
+.particlex-gradient-btn:active::after {
+    transform: translate(-50%, -50%) scale(4);
+    opacity: 1;
+    transition: 0s;
+}
+
+/* -- Loading Spinner -- */
+/* Use case: Page loading, AJAX content */
+/* Performance: single transform animation, very efficient */
+.particlex-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #66afef;
+    border-radius: 50%;
+    animation: particlex-spin 1s linear infinite;
+}
+@keyframes particlex-spin {
+    to { transform: rotate(360deg); }
+}
+
+
+/* ================================================================
+   2. KIRAKIRA.MOE ANIMATIONS (EXTENDED)
+   ================================================================
+   Source: kirakira.moe animation library
+   Easing: cubic-bezier(.19,1,.22,1) for entrance/exit
+   ================================================================ */
+
+/* -- Fade In/Out with kirakira easing -- */
+/* Use case: Modal overlays, tooltip appearance */
+/* Performance: opacity-only, triggers composite only */
+.kira-fade-in {
+    animation: kiraFadeIn 0.6s cubic-bezier(.19,1,.22,1) both;
+}
+.kira-fade-out {
+    animation: kiraFadeOut 0.6s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes kiraFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+@keyframes kiraFadeOut {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+/* -- Scale In/Out -- */
+/* Use case: Popup elements, notification toasts */
+/* Performance: transform + opacity, GPU-composited */
+.kira-scale-in {
+    animation: kiraScaleIn 0.5s cubic-bezier(.19,1,.22,1) both;
+}
+.kira-scale-out {
+    animation: kiraScaleOut 0.5s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes kiraScaleIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to   { opacity: 1; transform: scale(1); }
+}
+@keyframes kiraScaleOut {
+    from { opacity: 1; transform: scale(1); }
+    to   { opacity: 0; transform: scale(0.8); }
+}
+
+/* -- Cut In/Out (clip-path) -- */
+/* Use case: Dramatic section reveals, hero entrance */
+/* Performance: clip-path triggers paint, use sparingly */
+.kira-cut-in {
+    animation: kiraCutIn 0.7s cubic-bezier(.19,1,.22,1) both;
+}
+.kira-cut-out {
+    animation: kiraCutOut 0.7s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes kiraCutIn {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0 0 0); }
+}
+@keyframes kiraCutOut {
+    from { clip-path: inset(0 0 0 0); }
+    to   { clip-path: inset(0 0 0 100%); }
+}
+
+/* -- Rotation / Rotation Reverse -- */
+/* Use case: Icon spin on hover, loading indicators */
+/* Performance: transform-only, GPU-composited */
+.kira-rotate {
+    animation: kiraRotate 0.8s cubic-bezier(.19,1,.22,1) both;
+}
+.kira-rotate-reverse {
+    animation: kiraRotateReverse 0.8s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes kiraRotate {
+    from { opacity: 0; transform: rotate(-180deg); }
+    to   { opacity: 1; transform: rotate(0deg); }
+}
+@keyframes kiraRotateReverse {
+    from { opacity: 0; transform: rotate(180deg); }
+    to   { opacity: 1; transform: rotate(0deg); }
+}
+
+/* -- Breathe Effect -- */
+/* Use case: Notification badges, "live" indicators, CTA attention */
+/* Performance: transform + opacity, GPU-composited */
+.kira-breathe {
+    animation: kiraBreathe 2s ease-in-out infinite;
+}
+@keyframes kiraBreathe {
+    0%, 100% { transform: scale(1);    opacity: 1; }
+    50%      { transform: scale(1.05); opacity: 0.7; }
+}
+
+/* -- Swing / Wobble -- */
+/* Use case: Error feedback, playful interactions, attention grab */
+/* Performance: transform-only, GPU-composited */
+.kira-swing {
+    transform-origin: top center;
+    animation: kiraSwing 1s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes kiraSwing {
+    20%  { transform: rotate(15deg); }
+    40%  { transform: rotate(-10deg); }
+    60%  { transform: rotate(5deg); }
+    80%  { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.kira-wobble {
+    animation: kiraWobble 1s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes kiraWobble {
+    0%   { transform: translateX(0); }
+    15%  { transform: translateX(-25px) rotate(-5deg); }
+    30%  { transform: translateX(20px) rotate(3deg); }
+    45%  { transform: translateX(-15px) rotate(-3deg); }
+    60%  { transform: translateX(10px) rotate(2deg); }
+    75%  { transform: translateX(-5px) rotate(-1deg); }
+    100% { transform: translateX(0); }
+}
+
+/* -- Shake / Headshake -- */
+/* Use case: Form validation error, delete confirmation */
+/* Performance: transform-only, GPU-composited */
+.kira-shake {
+    animation: kiraShake 0.8s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes kiraShake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+    20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+
+.kira-headshake {
+    animation: kiraHeadshake 1s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes kiraHeadshake {
+    0%     { transform: translateX(0) rotate(0); }
+    6.5%   { transform: translateX(-6px) rotate(-9deg); }
+    18.5%  { transform: translateX(5px) rotate(7deg); }
+    31.5%  { transform: translateX(-3px) rotate(-5deg); }
+    43.5%  { transform: translateX(2px) rotate(3deg); }
+    50%    { transform: translateX(0) rotate(0); }
+}
+
+/* -- Vibrate -- */
+/* Use case: Error alerts, phone-like notification */
+/* Performance: transform-only, GPU-composited */
+.kira-vibrate {
+    animation: kiraVibrate 0.3s linear infinite;
+}
+@keyframes kiraVibrate {
+    0%   { transform: translate(0); }
+    20%  { transform: translate(-2px, 2px); }
+    40%  { transform: translate(-2px, -2px); }
+    60%  { transform: translate(2px, 2px); }
+    80%  { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+/* -- Intro Animation (multi-step entrance) -- */
+/* Use case: Hero section on page load, splash screen */
+/* Performance: transform + opacity, staged with animation-delay */
+.kira-intro {
+    animation: kiraIntro 1s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes kiraIntro {
+    0%   { opacity: 0; transform: translateY(40px) scale(0.9); }
+    60%  { opacity: 1; transform: translateY(-5px) scale(1.02); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+
+/* ================================================================
+   3. GLASSMORPHISM EFFECTS
+   ================================================================
+   Characteristics: frosted glass, backdrop-filter blur,
+   semi-transparent backgrounds, subtle borders
+   ================================================================ */
+
+/* -- Basic Glassmorphism Card -- */
+/* Use case: Sidebar widgets, floating panels, modals */
+/* Performance: backdrop-filter is expensive; limit to 1-2 visible elements */
+.glass-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+    padding: 30px;
+}
+
+/* -- Glassmorphism with Hover Reveal -- */
+/* Use case: Feature cards that show detail on hover */
+/* Performance: backdrop-filter + transition; keep blur radius low */
+.glass-hover-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 25px;
+    transition: all 0.4s cubic-bezier(.19,1,.22,1);
+}
+.glass-hover-card:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px rgba(154, 187, 247, 0.3);
+    transform: translateY(-5px);
+}
+
+/* -- Glassmorphism Navbar -- */
+/* Use case: Sticky navigation bar */
+/* Performance: only activates backdrop-filter when scrolled */
+.glass-nav {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.35s cubic-bezier(.19,1,.22,1);
+}
+
+/* -- Glassmorphism Modal Overlay -- */
+/* Use case: Image lightbox, confirmation dialog */
+/* Performance: blur on overlay, not the modal content */
+.glass-overlay {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+.glass-modal {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    padding: 40px;
+    animation: glassModalIn 0.4s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes glassModalIn {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+
+/* ================================================================
+   4. NEUMORPHISM EFFECTS
+   ================================================================
+   Characteristics: soft extruded/inset shadows, light backgrounds,
+   subtle depth illusion
+   Best on: backgrounds around #e0e5ec or light pastels
+   ================================================================ */
+
+/* -- Neumorphic Raised Card -- */
+/* Use case: Feature cards, profile cards */
+/* Performance: box-shadow only, no paint triggers on hover */
+.neu-card {
+    background: #e8eef3;
+    border-radius: 20px;
+    box-shadow: 6px 6px 12px #c5cad0,
+                -6px -6px 12px #ffffff;
+    padding: 25px;
+    transition: box-shadow 0.35s cubic-bezier(.19,1,.22,1);
+}
+.neu-card:hover {
+    box-shadow: 4px 4px 8px #c5cad0,
+                -4px -4px 8px #ffffff;
+}
+
+/* -- Neumorphic Inset (Pressed) -- */
+/* Use case: Input fields, active tab indicators */
+.neu-inset {
+    background: #e8eef3;
+    border-radius: 12px;
+    box-shadow: inset 4px 4px 8px #c5cad0,
+                inset -4px -4px 8px #ffffff;
+    padding: 15px;
+}
+
+/* -- Neumorphic Button -- */
+/* Use case: Action buttons with tactile feel */
+.neu-btn {
+    background: #e8eef3;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 4px 4px 8px #c5cad0,
+                -4px -4px 8px #ffffff;
+    color: #1e3e3f;
+    cursor: pointer;
+    padding: 12px 24px;
+    transition: all 0.2s cubic-bezier(.19,1,.22,1);
+}
+.neu-btn:hover {
+    box-shadow: 2px 2px 4px #c5cad0,
+                -2px -2px 4px #ffffff;
+}
+.neu-btn:active {
+    box-shadow: inset 4px 4px 8px #c5cad0,
+                inset -4px -4px 8px #ffffff;
+}
+
+/* -- Neumorphic Toggle Switch -- */
+/* Use case: Dark mode toggle, setting switches */
+/* Note: requires HTML structure: label > input[type=checkbox] + span */
+.neu-toggle {
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    background: #e8eef3;
+    border-radius: 15px;
+    box-shadow: inset 3px 3px 6px #c5cad0,
+                inset -3px -3px 6px #ffffff;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.neu-toggle::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: #e8eef3;
+    border-radius: 50%;
+    box-shadow: 2px 2px 4px #c5cad0,
+                -2px -2px 4px #ffffff;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.3s cubic-bezier(.19,1,.22,1);
+}
+/* Apply via: .neu-toggle.active::after { transform: translateX(30px); } */
+
+
+/* ================================================================
+   5. GRADIENT ANIMATIONS
+   ================================================================
+   Performance note: background-position animation is cheap.
+   background-size animation is more expensive.
+   ================================================================ */
+
+/* -- Flowing Gradient Background -- */
+/* Use case: Hero header, CTA sections, footer accent */
+/* Performance: background-position only, very efficient */
+.gradient-flow {
+    background: linear-gradient(135deg, #92cafa, #a3ddfb, #9abbf7, #ffa2c4, #ffbbf4);
+    background-size: 300% 300%;
+    animation: gradientFlow 8s ease infinite;
+}
+@keyframes gradientFlow {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* -- Gradient Text (animated) -- */
+/* Use case: Headlines, hero titles, section headers */
+/* Performance: background-clip + background-position, efficient */
+.gradient-text-animated {
+    background: linear-gradient(90deg, #9abbf7, #ffa2c4, #ffbbf4, #9abbf7);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientTextFlow 4s linear infinite;
+}
+@keyframes gradientTextFlow {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+}
+
+/* -- Gradient Border (animated) -- */
+/* Use case: Featured post cards, special sections */
+/* Performance: background-clip trick, no layout triggers */
+.gradient-border-animated {
+    position: relative;
+    border-radius: 20px;
+    background: #fff;
+    isolation: isolate;
+}
+.gradient-border-animated::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #9abbf7, #ffa2c4, #ffbbf4, #9abbf7);
+    background-size: 300% 300%;
+    animation: gradientFlow 6s ease infinite;
+    z-index: -1;
+}
+
+/* -- Gradient Hover Glow -- */
+/* Use case: Button hover state, card highlight */
+.gradient-glow-hover {
+    position: relative;
+    transition: all 0.35s cubic-bezier(.19,1,.22,1);
+}
+.gradient-glow-hover::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: linear-gradient(120deg, #9abbf7, #ffbbf4);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.35s;
+    filter: blur(8px);
+}
+.gradient-glow-hover:hover::before {
+    opacity: 0.6;
+}
+
+/* -- Gradient Slide Reveal -- */
+/* Use case: Link underlines, nav highlights */
+.gradient-slide-reveal {
+    position: relative;
+}
+.gradient-slide-reveal::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #9abbf7, #ffbbf4);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(.19,1,.22,1);
+}
+.gradient-slide-reveal:hover::after {
+    transform: scaleX(1);
+}
+
+
+/* ================================================================
+   6. TEXT ANIMATIONS
+   ================================================================ */
+
+/* -- Typewriter Effect -- */
+/* Use case: Hero subtitle, intro text, terminal aesthetic */
+/* Performance: width animation triggers layout; use on single elements */
+.typewriter-effect {
+    display: inline-block;
+    overflow: hidden;
+    border-right: 3px solid #1e3e3f;
+    white-space: nowrap;
+    animation: typewriter 3s steps(40, end) forwards,
+               blinkCursor 0.75s step-end infinite;
+    width: 0;
+}
+@keyframes typewriter {
+    to { width: 100%; }
+}
+@keyframes blinkCursor {
+    0%, 100% { border-right-color: transparent; }
+    50%      { border-right-color: #1e3e3f; }
+}
+
+/* -- Text Reveal by Line -- */
+/* Use case: Blog post intro, quote blocks */
+/* Performance: clip-path on text, paint-only */
+.text-reveal-lines {
+    animation: textRevealLine 0.8s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes textRevealLine {
+    from { clip-path: inset(0 0 100% 0); opacity: 0; }
+    to   { clip-path: inset(0 0 0 0); opacity: 1; }
+}
+
+/* -- Text Gradient Shimmer -- */
+/* Use case: "New" badges, featured labels, hero text */
+/* Performance: background-position animation, efficient */
+.text-shimmer {
+    background: linear-gradient(
+        90deg,
+        #1e3e3f 0%,
+        #9abbf7 25%,
+        #ffa2c4 50%,
+        #9abbf7 75%,
+        #1e3e3f 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textShimmer 3s ease-in-out infinite;
+}
+@keyframes textShimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* -- Text Glow Pulse -- */
+/* Use case: Accent text, neon aesthetic headings */
+/* Performance: text-shadow animation, paint-only */
+.text-glow-pulse {
+    animation: textGlowPulse 2s ease-in-out infinite;
+}
+@keyframes textGlowPulse {
+    0%, 100% {
+        text-shadow: 0 0 5px rgba(154,187,247,0.5),
+                     0 0 10px rgba(154,187,247,0.3);
+    }
+    50% {
+        text-shadow: 0 0 10px rgba(255,162,196,0.8),
+                     0 0 20px rgba(255,162,196,0.5),
+                     0 0 30px rgba(255,162,196,0.3);
+    }
+}
+
+/* -- Letter Spacing Breathe -- */
+/* Use case: Section headers, emphasis */
+/* Performance: letter-spacing triggers layout; use sparingly */
+.text-breathe {
+    animation: textBreathe 3s ease-in-out infinite;
+}
+@keyframes textBreathe {
+    0%, 100% { letter-spacing: 0; }
+    50%      { letter-spacing: 4px; }
+}
+
+/* -- Word Highlight Sweep -- */
+/* Use case: Key phrase emphasis, search result highlights */
+/* Performance: background-size animation, efficient */
+.text-highlight-sweep {
+    background: linear-gradient(120deg, rgba(255,162,196,0) 0%, rgba(255,162,196,0.4) 100%);
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    transition: background-size 0.6s cubic-bezier(.19,1,.22,1);
+}
+.text-highlight-sweep.active,
+.text-highlight-sweep:hover {
+    background-size: 100% 100%;
+}
+
+
+/* ================================================================
+   7. CARD ANIMATIONS (3D TILT, HOVER EFFECTS)
+   ================================================================
+   Note: true 3D tilt requires JS for mouse position tracking.
+   These are CSS-only approximations.
+   ================================================================ */
+
+/* -- 3D Perspective Card Lift -- */
+/* Use case: Post cards, project cards */
+/* Performance: perspective + transform, GPU-composited */
+.card-3d-lift {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+.card-3d-lift:hover {
+    transform: rotateX(5deg) rotateY(-5deg) translateZ(20px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* -- 3D Card Flip -- */
+/* Use case: Flashcard UI, before/after reveal */
+/* Performance: backface-visibility + transform, GPU-composited */
+.card-flip-container {
+    perspective: 1000px;
+}
+.card-flip-inner {
+    position: relative;
+    transition: transform 0.6s cubic-bezier(.19,1,.22,1);
+    transform-style: preserve-3d;
+}
+.card-flip-container:hover .card-flip-inner {
+    transform: rotateY(180deg);
+}
+.card-flip-front,
+.card-flip-back {
+    backface-visibility: hidden;
+    border-radius: 20px;
+    position: absolute;
+    inset: 0;
+}
+.card-flip-back {
+    transform: rotateY(180deg);
+}
+
+/* -- Card Hover Shadow Morph -- */
+/* Use case: Any card-based layout */
+/* Performance: box-shadow transition only */
+.card-shadow-morph {
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.4s cubic-bezier(.19,1,.22,1),
+                transform 0.4s cubic-bezier(.19,1,.22,1);
+}
+.card-shadow-morph:hover {
+    box-shadow: 0 20px 40px rgba(154, 187, 247, 0.25),
+                0 10px 20px rgba(255, 162, 196, 0.15);
+    transform: translateY(-8px);
+}
+
+/* -- Card Image Zoom on Hover -- */
+/* Use case: Blog post with cover image */
+/* Performance: transform on img, GPU-composited */
+.card-image-zoom {
+    overflow: hidden;
+    border-radius: 20px;
+}
+.card-image-zoom img {
+    transition: transform 0.5s cubic-bezier(.19,1,.22,1);
+    will-change: transform;
+}
+.card-image-zoom:hover img {
+    transform: scale(1.08);
+}
+
+/* -- Card Content Slide Up on Hover -- */
+/* Use case: Portfolio items, image gallery */
+.card-slide-content {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+}
+.card-slide-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(.19,1,.22,1);
+}
+.card-slide-content:hover .card-slide-overlay {
+    transform: translateY(0);
+}
+
+/* -- Card Stagger Entrance -- */
+/* Use case: Grid of post cards on page load */
+/* Performance: animation-delay with nth-child, no JS */
+.card-stagger:nth-child(1) { animation-delay: 0.1s; }
+.card-stagger:nth-child(2) { animation-delay: 0.2s; }
+.card-stagger:nth-child(3) { animation-delay: 0.3s; }
+.card-stagger:nth-child(4) { animation-delay: 0.4s; }
+.card-stagger:nth-child(5) { animation-delay: 0.5s; }
+.card-stagger:nth-child(6) { animation-delay: 0.6s; }
+.card-stagger {
+    animation: cardStaggerIn 0.6s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes cardStaggerIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+
+/* ================================================================
+   8. PAGE TRANSITIONS
+   ================================================================
+   Note: Full page transitions require JS for route detection.
+   These provide the CSS keyframes for JS to trigger.
+   ================================================================ */
+
+/* -- Fade Transition -- */
+/* Use case: SPA page switches */
+.page-transition-fade-enter {
+    animation: pageFadeIn 0.4s ease both;
+}
+.page-transition-fade-exit {
+    animation: pageFadeOut 0.3s ease both;
+}
+@keyframes pageFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+@keyframes pageFadeOut {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+/* -- Slide Transition -- */
+/* Use case: Mobile-style page navigation */
+.page-slide-left-enter {
+    animation: pageSlideLeftIn 0.4s cubic-bezier(.19,1,.22,1) both;
+}
+.page-slide-left-exit {
+    animation: pageSlideLeftOut 0.3s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes pageSlideLeftIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes pageSlideLeftOut {
+    from { transform: translateX(0); opacity: 1; }
+    to   { transform: translateX(-30%); opacity: 0; }
+}
+
+/* -- Scale + Fade Transition -- */
+/* Use case: Modal-style content swap */
+.page-scale-enter {
+    animation: pageScaleIn 0.4s cubic-bezier(.19,1,.22,1) both;
+}
+.page-scale-exit {
+    animation: pageScaleOut 0.3s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes pageScaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+}
+@keyframes pageScaleOut {
+    from { opacity: 1; transform: scale(1); }
+    to   { opacity: 0; transform: scale(1.05); }
+}
+
+/* -- View Transition API support -- */
+/* Use case: Modern browsers with View Transitions API */
+/* Performance: browser-optimized, hardware-accelerated */
+@keyframes view-slide-in {
+    from { transform: translateX(30px); opacity: 0; }
+    to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes view-slide-out {
+    from { transform: translateX(0); opacity: 1; }
+    to   { transform: translateX(-30px); opacity: 0; }
+}
+::view-transition-old(root) {
+    animation: view-slide-out 0.3s cubic-bezier(.19,1,.22,1) both;
+}
+::view-transition-new(root) {
+    animation: view-slide-in 0.3s cubic-bezier(.19,1,.22,1) both;
+}
+
+
+/* ================================================================
+   9. SCROLL-TRIGGERED ANIMATIONS
+   ================================================================
+   Note: Pure CSS scroll-triggered animations use
+   animation-timeline: scroll() (limited browser support).
+   IntersectionObserver-based classes are also included.
+   ================================================================ */
+
+/* -- CSS Scroll-Driven Animation (modern browsers) -- */
+/* Use case: Progress bar, parallax, reveal-on-scroll */
+/* Performance: browser-optimized scroll observer */
+@supports (animation-timeline: scroll()) {
+    .scroll-progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, #9abbf7, #ffa2c4);
+        transform-origin: left;
+        animation: scrollProgress linear;
+        animation-timeline: scroll();
+        z-index: 10000;
+    }
+    @keyframes scrollProgress {
+        from { transform: scaleX(0); }
+        to   { transform: scaleX(1); }
+    }
+
+    .scroll-parallax {
+        animation: scrollParallax linear;
+        animation-timeline: scroll();
+        animation-range: entry 0% exit 100%;
+    }
+    @keyframes scrollParallax {
+        from { transform: translateY(50px); }
+        to   { transform: translateY(-50px); }
+    }
+}
+
+/* -- IntersectionObserver-Triggered Classes -- */
+/* Use case: Any element that should animate into view */
+/* Performance: only triggers once, uses CSS transitions */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s cubic-bezier(.19,1,.22,1),
+                transform 0.6s cubic-bezier(.19,1,.22,1);
+}
+.reveal-on-scroll.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-on-scroll.from-left {
+    transform: translateX(-40px);
+}
+.reveal-on-scroll.from-left.revealed {
+    transform: translateX(0);
+}
+
+.reveal-on-scroll.from-right {
+    transform: translateX(40px);
+}
+.reveal-on-scroll.from-right.revealed {
+    transform: translateX(0);
+}
+
+.reveal-on-scroll.scale-up {
+    transform: scale(0.9);
+}
+.reveal-on-scroll.scale-up.revealed {
+    transform: scale(1);
+}
+
+.reveal-on-scroll.rotate-in {
+    transform: rotate(-10deg) scale(0.9);
+}
+.reveal-on-scroll.rotate-in.revealed {
+    transform: rotate(0deg) scale(1);
+}
+
+/* Stagger delays for grid children */
+.reveal-stagger > *:nth-child(1) { transition-delay: 0.05s; }
+.reveal-stagger > *:nth-child(2) { transition-delay: 0.1s; }
+.reveal-stagger > *:nth-child(3) { transition-delay: 0.15s; }
+.reveal-stagger > *:nth-child(4) { transition-delay: 0.2s; }
+.reveal-stagger > *:nth-child(5) { transition-delay: 0.25s; }
+.reveal-stagger > *:nth-child(6) { transition-delay: 0.3s; }
+.reveal-stagger > *:nth-child(7) { transition-delay: 0.35s; }
+.reveal-stagger > *:nth-child(8) { transition-delay: 0.4s; }
+
+
+/* ================================================================
+   10. LOADING ANIMATIONS
+   ================================================================ */
+
+/* -- Skeleton Loading Placeholder -- */
+/* Use case: Content loading state for post cards, images */
+/* Performance: background-position animation, very efficient */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.5s ease-in-out infinite;
+    border-radius: 8px;
+}
+@keyframes skeletonShimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+.skeleton-text {
+    height: 14px;
+    margin-bottom: 8px;
+    width: 100%;
+}
+.skeleton-text:last-child {
+    width: 60%;
+}
+.skeleton-title {
+    height: 24px;
+    margin-bottom: 16px;
+    width: 80%;
+}
+.skeleton-avatar {
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+}
+.skeleton-image {
+    height: 200px;
+    width: 100%;
+}
+
+/* -- Shimmer Overlay (for existing content) -- */
+/* Use case: Overlay on images/cards while loading */
+.shimmer-overlay {
+    position: relative;
+    overflow: hidden;
+}
+.shimmer-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmerSweep 1.5s ease-in-out infinite;
+}
+@keyframes shimmerSweep {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* -- Dots Loading Bounce -- */
+/* Use case: Inline loading indicator, chat typing indicator */
+/* Performance: transform-only, GPU-composited */
+.loading-dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+.loading-dots span {
+    width: 8px;
+    height: 8px;
+    background: #9abbf7;
+    border-radius: 50%;
+    animation: dotsBounce 1.4s ease-in-out infinite;
+}
+.loading-dots span:nth-child(1) { animation-delay: 0s; }
+.loading-dots span:nth-child(2) { animation-delay: 0.16s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.32s; }
+@keyframes dotsBounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40%           { transform: scale(1); opacity: 1; }
+}
+
+/* -- Pulse Ring Loading -- */
+/* Use case: Full-page loader, image loading */
+.loading-pulse-ring {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid #9abbf7;
+    animation: pulseRing 1.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+@keyframes pulseRing {
+    0%   { transform: scale(0); opacity: 1; }
+    100% { transform: scale(1); opacity: 0; }
+}
+
+/* -- Dual Ring Spinner -- */
+/* Use case: AJAX loading, button loading state */
+.loading-dual-ring {
+    width: 40px;
+    height: 40px;
+}
+.loading-dual-ring::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 4px solid #9abbf7;
+    border-color: #9abbf7 transparent;
+    animation: dualRingSpin 1.2s linear infinite;
+}
+@keyframes dualRingSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* -- Growing Bars -- */
+/* Use case: Audio/equalizer visualization, loading */
+.loading-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 24px;
+}
+.loading-bars span {
+    width: 4px;
+    background: #9abbf7;
+    border-radius: 2px;
+    animation: barGrow 1.2s ease-in-out infinite;
+}
+.loading-bars span:nth-child(1) { animation-delay: 0s; }
+.loading-bars span:nth-child(2) { animation-delay: 0.1s; }
+.loading-bars span:nth-child(3) { animation-delay: 0.2s; }
+.loading-bars span:nth-child(4) { animation-delay: 0.3s; }
+.loading-bars span:nth-child(5) { animation-delay: 0.4s; }
+@keyframes barGrow {
+    0%, 100% { height: 6px; }
+    50%      { height: 24px; }
+}
+
+
+/* ================================================================
+   11. MICRO-INTERACTIONS
+   ================================================================ */
+
+/* -- Checkbox with Checkmark Animation -- */
+/* Use case: Task lists, filter toggles */
+/* Performance: transform + stroke-dashoffset, GPU-composited */
+.animated-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #d0d7de;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s cubic-bezier(.19,1,.22,1);
+}
+.animated-checkbox:checked {
+    background: linear-gradient(120deg, #9abbf7, #ffbbf4);
+    border-color: transparent;
+}
+.animated-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 10px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) scale(0);
+    animation: checkPop 0.3s cubic-bezier(.19,1,.22,1) forwards;
+}
+@keyframes checkPop {
+    to { transform: rotate(45deg) scale(1); }
+}
+
+/* -- Radio Button Pulse -- */
+/* Use case: Option selectors, filter choices */
+.animated-radio {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d0d7de;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s cubic-bezier(.19,1,.22,1);
+}
+.animated-radio:checked {
+    border-color: #9abbf7;
+}
+.animated-radio:checked::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background: linear-gradient(120deg, #9abbf7, #ffbbf4);
+    border-radius: 50%;
+    transform: scale(0);
+    animation: radioPop 0.3s cubic-bezier(.19,1,.22,1) forwards;
+}
+@keyframes radioPop {
+    to { transform: scale(1); }
+}
+
+/* -- Toggle Switch (iOS-style) -- */
+/* Use case: Settings, dark mode toggle */
+.toggle-switch {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 48px;
+    height: 26px;
+    background: #d0d7de;
+    border-radius: 13px;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.3s cubic-bezier(.19,1,.22,1);
+}
+.toggle-switch:checked {
+    background: linear-gradient(120deg, #9abbf7, #ffbbf4);
+}
+.toggle-switch::after {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: #fff;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    transition: transform 0.3s cubic-bezier(.19,1,.22,1);
+}
+.toggle-switch:checked::after {
+    transform: translateX(22px);
+}
+
+/* -- Button Ripple Effect (pure CSS) -- */
+/* Use case: All clickable buttons */
+/* Performance: pseudo-element scale animation */
+.ripple-btn {
+    position: relative;
+    overflow: hidden;
+}
+.ripple-btn::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    padding-top: 100%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform 0.5s, opacity 0.3s;
+}
+.ripple-btn:active::after {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 1;
+    transition: 0s;
+}
+
+/* -- Like Button Heart Animation -- */
+/* Use case: Post like/favorite buttons */
+/* Performance: transform + color transition */
+.like-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    transition: transform 0.3s cubic-bezier(.19,1,.22,1);
+    color: #d0d7de;
+}
+.like-btn:hover {
+    transform: scale(1.2);
+}
+.like-btn:active {
+    animation: heartBeat 0.4s cubic-bezier(.19,1,.22,1);
+}
+@keyframes heartBeat {
+    0%   { transform: scale(1); }
+    25%  { transform: scale(1.3); }
+    50%  { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+/* -- Copy Button Feedback -- */
+/* Use case: Code block copy button */
+.copy-btn {
+    position: relative;
+    transition: all 0.3s cubic-bezier(.19,1,.22,1);
+}
+.copy-btn.copied {
+    animation: copyFlash 0.5s ease;
+}
+@keyframes copyFlash {
+    0%   { background-color: rgba(154, 187, 247, 0.3); }
+    100% { background-color: transparent; }
+}
+
+/* -- Input Focus Animation -- */
+/* Use case: Form inputs, search bars */
+.animated-input {
+    border: 2px solid #d0d7de;
+    border-radius: 10px;
+    padding: 10px 15px;
+    transition: all 0.3s cubic-bezier(.19,1,.22,1);
+    outline: none;
+}
+.animated-input:focus {
+    border-color: #9abbf7;
+    box-shadow: 0 0 0 3px rgba(154, 187, 247, 0.25);
+}
+
+/* -- Floating Label Input -- */
+/* Use case: Modern form design */
+.float-label-group {
+    position: relative;
+}
+.float-label-group input {
+    border: 2px solid #d0d7de;
+    border-radius: 10px;
+    padding: 16px 15px 6px;
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.3s;
+}
+.float-label-group label {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 14px;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(.19,1,.22,1);
+}
+.float-label-group input:focus + label,
+.float-label-group input:not(:placeholder-shown) + label {
+    top: 12px;
+    transform: translateY(0);
+    font-size: 11px;
+    color: #9abbf7;
+}
+.float-label-group input:focus {
+    border-color: #9abbf7;
+}
+
+
+/* ================================================================
+   12. BACKGROUND ANIMATIONS
+   ================================================================
+   Performance warning: background animations can impact battery.
+   Consider using will-change and limiting to above-fold content.
+   ================================================================ */
+
+/* -- Floating Particles (pure CSS) -- */
+/* Use case: Hero section background, 404 page */
+/* Performance: multiple animated elements; limit to 10-15 particles */
+.particles-container {
+    position: relative;
+    overflow: hidden;
+}
+.particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: rgba(154, 187, 247, 0.4);
+    border-radius: 50%;
+    animation: particleRise linear infinite;
+}
+.particle:nth-child(1) { left: 10%; animation-duration: 8s; animation-delay: 0s; width: 6px; height: 6px; }
+.particle:nth-child(2) { left: 20%; animation-duration: 12s; animation-delay: 1s; width: 10px; height: 10px; background: rgba(255, 162, 196, 0.3); }
+.particle:nth-child(3) { left: 35%; animation-duration: 10s; animation-delay: 2s; }
+.particle:nth-child(4) { left: 50%; animation-duration: 14s; animation-delay: 0.5s; width: 12px; height: 12px; background: rgba(255, 187, 244, 0.3); }
+.particle:nth-child(5) { left: 65%; animation-duration: 9s; animation-delay: 3s; }
+.particle:nth-child(6) { left: 80%; animation-duration: 11s; animation-delay: 1.5s; width: 5px; height: 5px; }
+.particle:nth-child(7) { left: 90%; animation-duration: 13s; animation-delay: 4s; background: rgba(255, 162, 196, 0.3); }
+@keyframes particleRise {
+    0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+}
+
+/* -- Animated Waves -- */
+/* Use case: Section dividers, footer decoration */
+/* Performance: SVG or CSS shapes with transform animation */
+.waves-container {
+    position: relative;
+    height: 80px;
+    overflow: hidden;
+}
+.wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 100'%3E%3Cpath fill='%239abbf7' fill-opacity='0.3' d='M0,50 C360,0 720,100 1080,50 C1260,25 1350,75 1440,50 L1440,100 L0,100 Z'/%3E%3C/svg%3E") repeat-x;
+    background-size: 50% 100%;
+    animation: waveSlide 8s linear infinite;
+}
+.wave:nth-child(2) {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 100'%3E%3Cpath fill='%23ffa2c4' fill-opacity='0.2' d='M0,50 C360,100 720,0 1080,50 C1260,75 1350,25 1440,50 L1440,100 L0,100 Z'/%3E%3C/svg%3E") repeat-x;
+    background-size: 50% 100%;
+    animation: waveSlide 10s linear infinite reverse;
+    bottom: -5px;
+}
+@keyframes waveSlide {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* -- Aurora / Northern Lights Effect -- */
+/* Use case: Hero background, special event pages */
+/* Performance: multiple gradient layers with animation; use sparingly */
+.aurora-bg {
+    position: relative;
+    overflow: hidden;
+    background: #0a0a2e;
+}
+.aurora-bg::before,
+.aurora-bg::after {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    background: conic-gradient(
+        from 0deg at 50% 50%,
+        transparent 0deg,
+        rgba(154, 187, 247, 0.3) 60deg,
+        transparent 120deg,
+        rgba(255, 162, 196, 0.3) 180deg,
+        transparent 240deg,
+        rgba(255, 187, 244, 0.3) 300deg,
+        transparent 360deg
+    );
+    filter: blur(60px);
+    animation: auroraRotate 15s linear infinite;
+}
+.aurora-bg::after {
+    animation: auroraRotate 20s linear infinite reverse;
+    opacity: 0.7;
+}
+@keyframes auroraRotate {
+    to { transform: rotate(360deg); }
+}
+
+/* -- Twinkling Stars Background -- */
+/* Use case: Night theme, 404 page, space aesthetic */
+/* Performance: box-shadow-based stars, very efficient */
+.stars-bg {
+    position: relative;
+    background: linear-gradient(to bottom, #0a0a2e 0%, #1a1a4e 100%);
+}
+.stars-bg::before,
+.stars-bg::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow:
+        50px 30px 0 0 rgba(255,255,255,0.8),
+        150px 80px 0 0 rgba(255,255,255,0.6),
+        250px 20px 0 0 rgba(255,255,255,0.9),
+        350px 120px 0 0 rgba(255,255,255,0.5),
+        450px 60px 0 0 rgba(255,255,255,0.7),
+        100px 150px 0 0 rgba(255,255,255,0.6),
+        200px 180px 0 0 rgba(255,255,255,0.8),
+        300px 40px 0 0 rgba(255,255,255,0.5),
+        400px 160px 0 0 rgba(255,255,255,0.9),
+        500px 100px 0 0 rgba(255,255,255,0.7);
+    animation: twinkle 4s ease-in-out infinite;
+}
+.stars-bg::after {
+    animation-delay: 2s;
+    box-shadow:
+        80px 50px 0 0 rgba(255,255,255,0.7),
+        180px 100px 0 0 rgba(255,255,255,0.5),
+        280px 70px 0 0 rgba(255,255,255,0.8),
+        380px 140px 0 0 rgba(255,255,255,0.6),
+        480px 30px 0 0 rgba(255,255,255,0.9),
+        130px 170px 0 0 rgba(255,255,255,0.5),
+        230px 90px 0 0 rgba(255,255,255,0.7),
+        330px 160px 0 0 rgba(255,255,255,0.6),
+        430px 50px 0 0 rgba(255,255,255,0.8),
+        530px 130px 0 0 rgba(255,255,255,0.5);
+}
+@keyframes twinkle {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.3; }
+}
+
+/* -- Mesh Gradient Background -- */
+/* Use case: Hero sections, error pages */
+/* Performance: background-position animation, efficient */
+.mesh-gradient {
+    background:
+        radial-gradient(ellipse at 20% 50%, rgba(154, 187, 247, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(255, 162, 196, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 40% 80%, rgba(255, 187, 244, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #f6f8fa 0%, #e8f4fd 100%);
+    background-size: 200% 200%;
+    animation: meshFloat 12s ease-in-out infinite;
+}
+@keyframes meshFloat {
+    0%, 100% { background-position: 0% 0%, 100% 0%, 50% 100%, 0% 0%; }
+    33%      { background-position: 100% 100%, 0% 100%, 100% 0%, 0% 0%; }
+    66%      { background-position: 50% 50%, 50% 50%, 0% 50%, 0% 0%; }
+}
+
+
+/* ================================================================
+   13. LIBRARY-INSPIRED EFFECTS
+   ================================================================
+   Adapted from: Animate.css, Hover.css, CSShake, Magic Animations
+   All converted to pure CSS with kirakira-style easing
+   ================================================================ */
+
+/* ---------- ANIMATE.CSS INSPIRED ---------- */
+
+/* -- Bounce In -- */
+/* Use case: Error numbers, CTA elements */
+.anim-bounce-in {
+    animation: animBounceIn 1s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes animBounceIn {
+    0%   { opacity: 0; transform: scale(0.3); }
+    50%  { opacity: 1; transform: scale(1.1); }
+    70%  { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+/* -- Flash -- */
+/* Use case: Attention grab, notification badge */
+.anim-flash {
+    animation: animFlash 1s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes animFlash {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75%      { opacity: 0; }
+}
+
+/* -- Jello -- */
+/* Use case: Playful hover effect, fun interactions */
+.anim-jello {
+    animation: animJello 1s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes animJello {
+    0%       { transform: scale3d(1, 1, 1); }
+    30%      { transform: scale3d(1.25, 0.75, 1); }
+    40%      { transform: scale3d(0.75, 1.25, 1); }
+    50%      { transform: scale3d(1.15, 0.85, 1); }
+    65%      { transform: scale3d(0.95, 1.05, 1); }
+    75%      { transform: scale3d(1.05, 0.95, 1); }
+    100%     { transform: scale3d(1, 1, 1); }
+}
+
+/* -- Rubber Band -- */
+/* Use case: Click feedback, playful stretch */
+.anim-rubber-band {
+    animation: animRubberBand 1s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes animRubberBand {
+    0%       { transform: scale(1); }
+    30%      { transform: scaleX(1.25) scaleY(0.75); }
+    40%      { transform: scaleX(0.75) scaleY(1.25); }
+    50%      { transform: scaleX(1.15) scaleY(0.85); }
+    65%      { transform: scaleX(0.95) scaleY(1.05); }
+    75%      { transform: scaleX(1.05) scaleY(0.95); }
+    100%     { transform: scale(1); }
+}
+
+/* -- Tada -- */
+/* Use case: Success feedback, achievement unlocked */
+.anim-tada {
+    animation: animTada 1s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes animTada {
+    0%   { transform: scale(1) rotate(0); }
+    10%, 20% { transform: scale(0.9) rotate(-3deg); }
+    30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
+    40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); }
+    100% { transform: scale(1) rotate(0); }
+}
+
+
+/* ---------- HOVER.CSS INSPIRED ---------- */
+
+/* -- Grow -- */
+.hover-grow-effect {
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(.19,1,.22,1);
+}
+.hover-grow-effect:hover {
+    transform: scale(1.1);
+}
+
+/* -- Shrink -- */
+.hover-shrink-effect {
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(.19,1,.22,1);
+}
+.hover-shrink-effect:hover {
+    transform: scale(0.9);
+}
+
+/* -- Pulse (hover) -- */
+.hover-pulse-effect {
+    display: inline-block;
+}
+.hover-pulse-effect:hover {
+    animation: hoverPulse 1s ease infinite;
+}
+@keyframes hoverPulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* -- Float -- */
+.hover-float-effect {
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(.19,1,.22,1);
+}
+.hover-float-effect:hover {
+    transform: translateY(-5px);
+}
+
+/* -- Underline from Center -- */
+.hover-underline-center {
+    position: relative;
+    display: inline-block;
+}
+.hover-underline-center::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #9abbf7, #ffa2c4);
+    transition: all 0.35s cubic-bezier(.19,1,.22,1);
+    transform: translateX(-50%);
+}
+.hover-underline-center:hover::after {
+    width: 100%;
+}
+
+/* -- Underline from Left -- */
+.hover-underline-left {
+    position: relative;
+    display: inline-block;
+}
+.hover-underline-left::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #9abbf7, #ffa2c4);
+    transition: width 0.35s cubic-bezier(.19,1,.22,1);
+}
+.hover-underline-left:hover::after {
+    width: 100%;
+}
+
+/* -- Bubble -- */
+.hover-bubble {
+    position: relative;
+    display: inline-block;
+}
+.hover-bubble::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(154, 187, 247, 0.15);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    transition: width 0.4s, height 0.4s;
+}
+.hover-bubble:hover::before {
+    width: 200%;
+    height: 200%;
+}
+
+/* -- Shadow Grow -- */
+.hover-shadow-grow {
+    transition: box-shadow 0.3s cubic-bezier(.19,1,.22,1);
+}
+.hover-shadow-grow:hover {
+    box-shadow: 0 10px 30px rgba(154, 187, 247, 0.3);
+}
+
+
+/* ---------- CSSHAKE INSPIRED ---------- */
+
+/* -- Shake Little -- */
+/* Use case: Subtle error feedback */
+.shake-little:hover {
+    animation: shakeLittle 0.5s ease infinite;
+}
+@keyframes shakeLittle {
+    0%, 100% { transform: translate(0, 0) rotate(0); }
+    25%      { transform: translate(2px, 1px) rotate(0.5deg); }
+    50%      { transform: translate(-1px, -1px) rotate(-0.5deg); }
+    75%      { transform: translate(1px, 2px) rotate(0.5deg); }
+}
+
+/* -- Shake Hard -- */
+/* Use case: Critical error, strong feedback */
+.shake-hard:hover {
+    animation: shakeHard 0.5s ease;
+}
+@keyframes shakeHard {
+    0%, 100% { transform: translate(0, 0) rotate(0); }
+    10%      { transform: translate(-10px, 0) rotate(-2deg); }
+    20%      { transform: translate(10px, 0) rotate(2deg); }
+    30%      { transform: translate(-10px, 0) rotate(-2deg); }
+    40%      { transform: translate(10px, 0) rotate(2deg); }
+    50%      { transform: translate(-5px, 0) rotate(-1deg); }
+    60%      { transform: translate(5px, 0) rotate(1deg); }
+    70%      { transform: translate(-3px, 0) rotate(0); }
+    80%      { transform: translate(3px, 0) rotate(0); }
+}
+
+/* -- Shake Rotate -- */
+/* Playful interaction feedback */
+.shake-rotate:hover {
+    animation: shakeRotate 0.5s ease;
+}
+@keyframes shakeRotate {
+    0%, 100% { transform: translate(0, 0) rotate(0); }
+    10%      { transform: translate(-4px, -4px) rotate(-2deg); }
+    30%      { transform: translate(4px, 4px) rotate(2deg); }
+    50%      { transform: translate(-4px, 4px) rotate(-1deg); }
+    70%      { transform: translate(4px, -4px) rotate(1deg); }
+}
+
+
+/* ---------- MAGIC ANIMATIONS INSPIRED ---------- */
+
+/* -- Magic (appear with sparkle) -- */
+.magic-in {
+    animation: magicIn 1s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes magicIn {
+    0%   { opacity: 0; transform: scale(0) rotate(-30deg); transform-origin: center; }
+    100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+/* -- Perspective Flip -- */
+.perspective-flip {
+    animation: perspectiveFlip 1s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes perspectiveFlip {
+    0%   { opacity: 0; transform: perspective(800px) rotateX(90deg); }
+    40%  { transform: perspective(800px) rotateX(-10deg); }
+    70%  { transform: perspective(800px) rotateX(5deg); }
+    100% { opacity: 1; transform: perspective(800px) rotateX(0); }
+}
+
+/* -- Twister -- */
+.twister-in {
+    animation: twisterIn 1s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes twisterIn {
+    0%   { opacity: 0; transform: scale(0) rotate(360deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+/* -- Swap -- */
+.swap-in {
+    animation: swapIn 1s cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes swapIn {
+    0%   { opacity: 0; transform: rotateY(-180deg) scale(0.5); }
+    60%  { transform: rotateY(10deg) scale(1.05); }
+    100% { opacity: 1; transform: rotateY(0deg) scale(1); }
+}
+
+
+/* ================================================================
+   UTILITY CLASSES
+   ================================================================ */
+
+/* -- Animation Delay Utilities -- */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-700 { animation-delay: 0.7s; }
+.delay-1000 { animation-delay: 1s; }
+
+/* -- Animation Duration Utilities -- */
+.duration-fast { animation-duration: 0.3s; }
+.duration-normal { animation-duration: 0.5s; }
+.duration-slow { animation-duration: 0.8s; }
+.duration-slower { animation-duration: 1.2s; }
+
+/* -- Fill Mode Utilities -- */
+.fill-both { animation-fill-mode: both; }
+.fill-forwards { animation-fill-mode: forwards; }
+
+/* -- Play State Utilities -- */
+.play-paused { animation-play-state: paused; }
+.play-running { animation-play-state: running; }
+
+/* -- Reduce Motion (accessibility) -- */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ================================================================
+   PERFORMANCE BEST PRACTICES
+   ================================================================
+   1. Prefer animating transform and opacity (GPU-composited)
+   2. Avoid animating width, height, top, left, margin, padding (layout triggers)
+   3. Use will-change sparingly and only on elements that will animate
+   4. Limit backdrop-filter blur radius (expensive on mobile)
+   5. Use animation-fill-mode: both for entrance animations
+   6. Respect prefers-reduced-motion for accessibility
+   7. Limit particle count to 10-15 for smooth 60fps
+   8. Use CSS containment (contain: layout style paint) where possible
+   9. Test on lower-end devices; reduce effects if needed
+   10. Use animation-delay for staggered effects instead of JS timers
+   ================================================================ */

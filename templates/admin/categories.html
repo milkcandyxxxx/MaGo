@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分类管理 - MaGo 管理后台</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <style>
+        .admin-header {
+            background: var(--bg-card);
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+            margin-bottom: 30px;
+        }
+        .admin-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .admin-nav-left {
+            display: flex;
+            gap: 20px;
+        }
+        .admin-nav-right {
+            display: flex;
+            gap: 15px;
+        }
+        .admin-link {
+            color: var(--text-secondary);
+            font-size: 14px;
+            transition: color var(--transition-fast);
+        }
+        .admin-link:hover {
+            color: var(--link-color);
+        }
+        .admin-link.active {
+            color: var(--link-color);
+            font-weight: bold;
+        }
+        .admin-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .admin-title {
+            margin-bottom: 25px;
+        }
+        .add-form {
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-card);
+            padding: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+        }
+        .add-form .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        .admin-table {
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+        }
+        .admin-table table {
+            margin: 0;
+        }
+        .admin-table th, .admin-table td {
+            padding: 12px 15px;
+        }
+        .action-btn-danger {
+            background: none;
+            border: 1px solid #e74c3c;
+            border-radius: 5px;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 12px;
+            padding: 5px 10px;
+            transition: all var(--transition-fast);
+        }
+        .action-btn-danger:hover {
+            background: #e74c3c;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <div class="admin-nav">
+            <div class="admin-nav-left">
+                <a href="/admin" class="admin-link">文章管理</a>
+                <a href="/admin/categories" class="admin-link active">分类管理</a>
+                <a href="/admin/tags" class="admin-link">标签管理</a>
+            </div>
+            <div class="admin-nav-right">
+                <a href="/" class="admin-link">查看博客</a>
+                <a href="/admin/logout" class="admin-link">退出登录</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-content">
+        <h1 class="admin-title">分类管理</h1>
+
+        <div class="add-form">
+            <form method="POST" action="/admin/category" style="display: flex; gap: 15px; width: 100%; align-items: flex-end;">
+                <div class="form-group">
+                    <label>分类名称</label>
+                    <input type="text" name="name" required placeholder="输入分类名称">
+                </div>
+                <div class="form-group">
+                    <label>Slug</label>
+                    <input type="text" name="slug" required placeholder="url-slug">
+                </div>
+                <button type="submit" class="btn btn-sm">添加分类</button>
+            </form>
+        </div>
+
+        <div class="admin-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>名称</th>
+                        <th>Slug</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range .Categories}}
+                    <tr>
+                        <td>{{.ID}}</td>
+                        <td>{{.Name}}</td>
+                        <td>{{.Slug}}</td>
+                        <td>
+                            <form method="POST" action="/admin/category/{{.ID}}/delete" style="display: inline;" onsubmit="return confirm('确定删除这个分类？')">
+                                <button type="submit" class="action-btn-danger">删除</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

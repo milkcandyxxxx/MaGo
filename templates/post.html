@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}} - MaGo</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+    <header id="header">
+        <nav id="nav">
+            <div class="nav-left">
+                <a href="/" class="site-title">MaGo</a>
+            </div>
+            <div class="nav-right">
+                <a href="/" class="nav-link">首页</a>
+                <a href="/archives" class="nav-link">归档</a>
+                <a href="/categories" class="nav-link">分类</a>
+                <a href="/tags" class="nav-link">标签</a>
+                <a href="/about" class="nav-link">关于</a>
+                <a href="/search" class="nav-link">搜索</a>
+            </div>
+            <button class="mobile-menu-btn">&#9776;</button>
+        </nav>
+    </header>
+
+    <main id="main" style="flex-direction: column; max-width: 800px;">
+        <article class="article">
+            <div class="article-header">
+                <h1 class="article-title">{{.Article.Title}}</h1>
+                <div class="article-meta">
+                    <span>{{.Article.CreatedAt.Format "2006-01-02"}}</span>
+                    {{if .Article.Category}}
+                    <span>分类: <a href="/category/{{.Article.Category.Slug}}">{{.Article.Category.Name}}</a></span>
+                    {{end}}
+                </div>
+                {{if .Article.Tags}}
+                <div class="post-tags" style="justify-content: center; margin-top: 15px;">
+                    {{range .Article.Tags}}
+                    <a href="/tag/{{.Slug}}" class="tag">{{.Name}}</a>
+                    {{end}}
+                </div>
+                {{end}}
+            </div>
+
+            <div class="article-content">
+                {{.HTML}}
+            </div>
+        </article>
+
+        <div class="comment-section" id="comments">
+            <h2>评论 ({{len .Comments}})</h2>
+
+            {{range .Comments}}
+            <div class="comment">
+                <div class="comment-header">
+                    <span class="comment-nickname">{{.Nickname}}</span>
+                    <span class="comment-date">{{.CreatedAt.Format "2006-01-02 15:04"}}</span>
+                </div>
+                <div class="comment-content">{{.Content}}</div>
+
+                {{range .Replies}}
+                <div class="comment comment-reply">
+                    <div class="comment-header">
+                        <span class="comment-nickname">{{.Nickname}}</span>
+                        <span class="comment-date">{{.CreatedAt.Format "2006-01-02 15:04"}}</span>
+                    </div>
+                    <div class="comment-content">{{.Content}}</div>
+                </div>
+                {{end}}
+
+                <div style="margin-top: 10px;">
+                    <a href="#" onclick="toggleReply({{.ID}}); return false;" style="font-size: 13px; color: var(--text-muted);">回复</a>
+                </div>
+                <div id="reply-{{.ID}}" style="display: none; margin-top: 15px;">
+                    <form method="POST" action="/comment" accept-charset="UTF-8">
+                        <input type="hidden" name="article_id" value="{{$.Article.ID}}">
+                        <input type="hidden" name="article_slug" value="{{$.Article.Slug}}">
+                        <input type="hidden" name="parent_id" value="{{.ID}}">
+                        <div class="form-group">
+                            <input type="text" name="nickname" placeholder="昵称" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="邮箱（可选）">
+                        </div>
+                        <div class="form-group">
+                            <textarea name="content" placeholder="回复内容" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-sm">提交回复</button>
+                    </form>
+                </div>
+            </div>
+            {{end}}
+
+            <div class="comment-form">
+                <h3 style="margin-bottom: 15px;">发表评论</h3>
+                <form method="POST" action="/comment" accept-charset="UTF-8">
+                    <input type="hidden" name="article_id" value="{{.Article.ID}}">
+                    <input type="hidden" name="article_slug" value="{{.Article.Slug}}">
+                    <div class="form-group">
+                        <label>昵称 *</label>
+                        <input type="text" name="nickname" required>
+                    </div>
+                    <div class="form-group">
+                        <label>邮箱（可选）</label>
+                        <input type="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label>评论内容 *</label>
+                        <textarea name="content" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">提交评论</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/" class="footer-link">首页</a>
+                <a href="/archives" class="footer-link">归档</a>
+                <a href="/categories" class="footer-link">分类</a>
+                <a href="/tags" class="footer-link">标签</a>
+                <a href="/about" class="footer-link">关于</a>
+                <a href="/rss" class="footer-link">RSS</a>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2024 MaGo. Powered by Go + Gin.
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+    <script>
+        function toggleReply(id) {
+            var el = document.getElementById('reply-' + id);
+            el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>

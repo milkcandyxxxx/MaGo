@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台 - MaGo</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <style>
+        .admin-header {
+            background: var(--bg-card);
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+            margin-bottom: 30px;
+        }
+        .admin-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .admin-nav-left {
+            display: flex;
+            gap: 20px;
+        }
+        .admin-nav-right {
+            display: flex;
+            gap: 15px;
+        }
+        .admin-link {
+            color: var(--text-secondary);
+            font-size: 14px;
+            transition: color var(--transition-fast);
+        }
+        .admin-link:hover {
+            color: var(--link-color);
+        }
+        .admin-link.active {
+            color: var(--link-color);
+            font-weight: bold;
+        }
+        .admin-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .admin-title {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .admin-table {
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+        }
+        .admin-table table {
+            margin: 0;
+        }
+        .admin-table th, .admin-table td {
+            padding: 12px 15px;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        .status-published {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .status-draft {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        .action-btn {
+            background: none;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 12px;
+            padding: 5px 10px;
+            transition: all var(--transition-fast);
+        }
+        .action-btn:hover {
+            border-color: var(--link-color);
+            color: var(--link-color);
+        }
+        .action-btn-danger {
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+        .action-btn-danger:hover {
+            background: #e74c3c;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <div class="admin-nav">
+            <div class="admin-nav-left">
+                <a href="/admin" class="admin-link active">文章管理</a>
+                <a href="/admin/categories" class="admin-link">分类管理</a>
+                <a href="/admin/tags" class="admin-link">标签管理</a>
+            </div>
+            <div class="admin-nav-right">
+                <a href="/" class="admin-link">查看博客</a>
+                <a href="/admin/logout" class="admin-link">退出登录</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-content">
+        <div class="admin-title">
+            <h1>文章管理</h1>
+            <a href="/admin/article/new" class="btn">新建文章</a>
+        </div>
+
+        <div class="admin-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>标题</th>
+                        <th>状态</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range .Articles}}
+                    <tr>
+                        <td>{{.ID}}</td>
+                        <td>{{.Title}}</td>
+                        <td>
+                            {{if eq .Status 1}}
+                            <span class="status-badge status-published">已发布</span>
+                            {{else}}
+                            <span class="status-badge status-draft">草稿</span>
+                            {{end}}
+                        </td>
+                        <td>{{.CreatedAt.Format "2006-01-02 15:04"}}</td>
+                        <td>
+                            <a href="/admin/article/{{.ID}}/edit" class="action-btn">编辑</a>
+                            <form method="POST" action="/admin/article/{{.ID}}/delete" style="display: inline;" onsubmit="return confirm('确定删除这篇文章？')">
+                                <button type="submit" class="action-btn action-btn-danger">删除</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

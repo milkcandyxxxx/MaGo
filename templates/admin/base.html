@@ -1,0 +1,103 @@
+{{define "admin_base"}}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}} - MaGo 管理后台</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <style>
+        .admin-nav {
+            background: #333;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .admin-nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+        .admin-nav a:hover {
+            color: #ddd;
+        }
+        .admin-content {
+            padding: 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .btn-danger {
+            background: #dc3545;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+        th {
+            background: #f8f9fa;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .form-group textarea {
+            min-height: 300px;
+            font-family: monospace;
+        }
+        .error {
+            color: #dc3545;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="admin-nav">
+        <div>
+            <a href="/admin">管理后台</a>
+            <a href="/admin/article/new">新建文章</a>
+            <a href="/admin/categories">分类管理</a>
+            <a href="/admin/tags">标签管理</a>
+        </div>
+        <div>
+            <a href="/">查看博客</a>
+            <a href="/admin/logout">退出</a>
+        </div>
+    </nav>
+    <div class="admin-content">
+        {{template "admin_content" .}}
+    </div>
+</body>
+</html>
+{{end}}

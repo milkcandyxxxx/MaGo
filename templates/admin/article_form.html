@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}} - MaGo 管理后台</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <style>
+        .admin-header {
+            background: var(--bg-card);
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+            margin-bottom: 30px;
+        }
+        .admin-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .admin-nav-left {
+            display: flex;
+            gap: 20px;
+        }
+        .admin-nav-right {
+            display: flex;
+            gap: 15px;
+        }
+        .admin-link {
+            color: var(--text-secondary);
+            font-size: 14px;
+            transition: color var(--transition-fast);
+        }
+        .admin-link:hover {
+            color: var(--link-color);
+        }
+        .admin-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .form-card {
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-card);
+            padding: 30px;
+        }
+        .form-title {
+            margin-bottom: 25px;
+        }
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .checkbox-label input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <div class="admin-nav">
+            <div class="admin-nav-left">
+                <a href="/admin" class="admin-link">文章管理</a>
+                <a href="/admin/categories" class="admin-link">分类管理</a>
+                <a href="/admin/tags" class="admin-link">标签管理</a>
+            </div>
+            <div class="admin-nav-right">
+                <a href="/" class="admin-link">查看博客</a>
+                <a href="/admin/logout" class="admin-link">退出登录</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-content">
+        <div class="form-card">
+            <h1 class="form-title">{{.Title}}</h1>
+
+            <form method="POST" action="{{if .Article}}/admin/article/{{.Article.ID}}{{else}}/admin/article{{end}}">
+                <div class="form-group">
+                    <label>标题 *</label>
+                    <input type="text" name="title" value="{{if .Article}}{{.Article.Title}}{{end}}" required placeholder="文章标题">
+                </div>
+
+                <div class="form-group">
+                    <label>Slug *</label>
+                    <input type="text" name="slug" value="{{if .Article}}{{.Article.Slug}}{{end}}" required placeholder="url-friendly-slug">
+                </div>
+
+                <div class="form-group">
+                    <label>内容 (Markdown) *</label>
+                    <textarea name="content" required placeholder="使用 Markdown 格式编写文章内容...">{{if .Article}}{{.Article.Content}}{{end}}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>分类</label>
+                    <select name="category_id">
+                        <option value="0">无分类</option>
+                        {{range .Categories}}
+                        <option value="{{.ID}}">{{.Name}}</option>
+                        {{end}}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>标签</label>
+                    <div class="checkbox-group">
+                        {{range .Tags}}
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="tags" value="{{.ID}}">
+                            {{.Name}}
+                        </label>
+                        {{end}}
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 20px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>状态</label>
+                        <select name="status">
+                            <option value="1">已发布</option>
+                            <option value="0">草稿</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="flex: 1;">
+                        <label>置顶（数字越大越靠前）</label>
+                        <input type="number" name="pinned" value="{{if .Article}}{{.Article.Pinned}}{{else}}0{{end}}" min="0">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn">保存文章</button>
+                    <a href="/admin" class="btn btn-outline">取消</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

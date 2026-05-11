@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - MaGo 管理后台</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: 150px auto;
+            animation: fadeInUp 0.5s ease-out;
+        }
+        .login-card {
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-card);
+            padding: 40px;
+        }
+        .login-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--text-primary);
+        }
+        .error-msg {
+            background: #fff3f3;
+            color: #e74c3c;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <nav id="nav">
+            <div class="nav-left">
+                <a href="/" class="site-title">MaGo</a>
+            </div>
+            <div class="nav-right">
+                <a href="/" class="nav-link">返回博客</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main" style="flex-direction: column;">
+        <div class="login-container">
+            <div class="login-card">
+                <h1 class="login-title">管理后台登录</h1>
+
+                {{if .Error}}
+                <div class="error-msg">{{.Error}}</div>
+                {{end}}
+
+                <form method="POST" action="/admin/login">
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input type="password" name="password" required placeholder="请输入管理员密码">
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">登录</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

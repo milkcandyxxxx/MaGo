@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>归档 - MaGo</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+    <header id="header">
+        <nav id="nav">
+            <div class="nav-left">
+                <a href="/" class="site-title">MaGo</a>
+            </div>
+            <div class="nav-right">
+                <a href="/" class="nav-link">首页</a>
+                <a href="/archives" class="nav-link">归档</a>
+                <a href="/categories" class="nav-link">分类</a>
+                <a href="/tags" class="nav-link">标签</a>
+                <a href="/about" class="nav-link">关于</a>
+                <a href="/search" class="nav-link">搜索</a>
+            </div>
+            <button class="mobile-menu-btn">&#9776;</button>
+        </nav>
+    </header>
+
+    <main id="main" style="flex-direction: column; max-width: 800px;">
+        <h1 style="margin-bottom: 25px;">归档</h1>
+
+        <div class="archive-list">
+            {{if .Articles}}
+                {{range .Articles}}
+                <div class="archive-item">
+                    <span class="archive-date">{{.CreatedAt.Format "2006-01-02"}}</span>
+                    <span class="archive-title">
+                        <a href="/post/{{.Slug}}">{{.Title}}</a>
+                    </span>
+                </div>
+                {{end}}
+            {{else}}
+                <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                    暂无文章
+                </div>
+            {{end}}
+        </div>
+    </main>
+
+    <footer id="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/" class="footer-link">首页</a>
+                <a href="/archives" class="footer-link">归档</a>
+                <a href="/categories" class="footer-link">分类</a>
+                <a href="/tags" class="footer-link">标签</a>
+                <a href="/about" class="footer-link">关于</a>
+                <a href="/rss" class="footer-link">RSS</a>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2024 MaGo. Powered by Go + Gin.
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
