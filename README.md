@@ -20,7 +20,7 @@ Go + Gin + SQLite + GORM + Goldmark
 ```bash
 git clone https://github.com/yourusername/mago.git
 cd mago
-go build -o mago cmd/blog/main.go
+go build -o mago .
 ```
 
 ### 运行
